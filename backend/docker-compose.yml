@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  # https://github.com/docker-library/docs/tree/master/postgres
+  # db:
+  #   image: postgres:14.2-alpine
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: secret
+  #     POSTGRES_DB: waypoints
+
+  # https://github.com/docker-library/docs/tree/master/python
+  api:
+    build: ./api/
+    # command: python ./src/sample.py
+    # command: python --version
+    # command: poetry --version
+    command: poetry run uvicorn src.main:app --host 0.0.0.0 --reload
+    ports:
+      - 8000:8000
+    volumes:
+      - ./api/src:/home/src
+    environment:
+      # DB_HOST: localhost
+      DB_USER: postgres
+      DB_PASSWORD: secret
+      DB_NAME: waypoints

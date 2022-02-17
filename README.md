@@ -9,7 +9,6 @@
 ## Dependencies
 ### Backend
 #### Python env
-* python versioning: [`pyenv`](https://github.com/pyenv/pyenv/)
 * env/deps management: [`poetry`](https://python-poetry.org/docs/basic-usage/)
 
 #### App runtime
@@ -23,44 +22,40 @@
 
 ### Frontend
 #### App runtime
-
 #### Dev env
 
 ## Commands
-### DB
-```bash
-# TODO: replace "brew" commands with Linux package manager
-$ brew install postgres
-$ brew services start postgresql
-# $ psql postgres
-
-$ createdb waypoints
-# $ pg_dump waypoints > dump.sql
-```
-
 ### Backend
 ```bash
-# python version
-# TODO: replace "brew" commands with Linux package manager
-$ brew install pyenv
-$ pyenv install 3.10.2
+$ docker-compose up --build
+$ docker-compose up -d
+# visit http://localhost:8000/ and http://localhost:8000/docs
 
-# python deps
-$ curl -sSL https://install.python-poetry.org | python3 -
-$ poetry install
+$ docker-compose ps -a
+$ docker-compose down
+$ docker logs -f <container-id>
+$ docker image prune
+```
 
+#### DB
+```bash
+$ docker-compose exec db pg_dump waypoints -U postgres
+```
+
+#### API
+```bash
 # init DB (create tables based on sqlalchemy models)
-$ poetry run python ...
+$ docker-compose run api poetry run python src/init-db.py
 
 # start web server
-$ uvicorn main:app
-# $ uvicorn main:app --reload
+$ docker-compose run api poetry run uvicorn main:app
+# $ docker-compose run api poetry run uvicorn main:app --reload
 
 # lint
-$ poetry run pycodestyle --show-source ./src/
+$ docker-compose run api poetry run pycodestyle --show-source ./src/
 
 # unit tests
-$ poetry run pytest ./src/
+$ docker-compose run api poetry run pytest ./src/
 ```
 
 ### Frontend
