@@ -1,10 +1,8 @@
-from time import time
 from sqlalchemy import Column, DateTime, Integer, String
 from sqlalchemy.sql import func
-from sqlalchemy.ext.declarative import declarative_base
 from geoalchemy2 import Geometry
 
-Base = declarative_base()
+from .db import Base
 
 
 class Waypoint(Base):

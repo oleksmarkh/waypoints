@@ -1,9 +1,10 @@
 version: "3"
 
 services:
-  # https://github.com/docker-library/docs/tree/master/postgres
   db:
+    # https://github.com/docker-library/docs/tree/master/postgres
     # image: postgres:14.2-alpine
+    # https://github.com/postgis/docker-postgis/
     image: postgis/postgis:14-3.2-alpine
     ports:
       - 5432:5432
@@ -12,15 +13,11 @@ services:
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: waypoints
 
-  # https://github.com/docker-library/docs/tree/master/python
   api:
     build: ./api/
-    # command: python ./src/sample.py
-    # command: python --version
     # command: poetry --version
-    # command: poetry run python ./src/recreate_tables.py
-    command: ./wait-for-postgres.sh poetry run python ./src/recreate_tables.py
     # command: poetry run uvicorn src.main:app --host 0.0.0.0 --reload
+    command: ./wait-for-postgres.sh poetry run uvicorn src.main:app --host 0.0.0.0 --reload
     ports:
       - 8000:8000
     volumes:

@@ -31,6 +31,13 @@
 #### App runtime
 #### Dev env
 
+## TODO
+### Backend
+* Mount a volume for DB files, so it persists among container recreations.
+* Configure logging and mount a volume for it.
+
+### Frontend
+
 ## Commands
 ### Backend
 ```bash
@@ -52,14 +59,6 @@ $ docker-compose exec db psql waypoints postgres
 
 #### API
 ```bash
-# init DB (create tables based on sqlalchemy models)
-$ docker-compose run api ./wait-for-postgres.sh poetry run ./src/recreate_tables.py
-$ docker-compose run api poetry run python ./src/recreate_tables.py
-
-# start web server
-$ docker-compose run api poetry run uvicorn main:app
-# $ docker-compose run api poetry run uvicorn main:app --reload
-
 # lint
 $ docker-compose run api poetry run pycodestyle --show-source ./src/
 
