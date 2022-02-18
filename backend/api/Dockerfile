@@ -9,6 +9,6 @@ ENV \
 RUN apk add --no-cache gcc libffi-dev musl-dev g++
 RUN pip install "poetry==$POETRY_VERSION"
 
-COPY setup.cfg pyproject.toml poetry.lock ./
+COPY setup.cfg pyproject.toml poetry.lock wait-for-postgres.sh ./
 
 RUN poetry install

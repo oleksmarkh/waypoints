@@ -1,6 +1,7 @@
-backend/api/src/__pycache__
-backend/api/src/.pytest_cache
+.vscode
+.venv
+__pycache__
+.pytest_cache
 
 backend/db/dump.sql
-
 frontend/node_modules
