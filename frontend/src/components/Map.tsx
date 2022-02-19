@@ -6,6 +6,7 @@ import config from '../config'
 import { Waypoint } from '../models/waypoint'
 import createMap from '../map/map'
 import WaypointMarker from '../map/WaypointMarker'
+import InfoBox from '../map/InfoBox'
 import MarkerPopup from './MarkerPopup'
 
 interface MapProps {
@@ -31,8 +32,12 @@ export default function Map(
 
   useEffect(() => {
     const map = createMap(false)
+    const infoBox = new InfoBox(config.map.infoBox.options as L.ControlOptions)
+
+    infoBox.addTo(map)
     map.on('click', onMapClick)
     mapRef.current = map
+
     return () => { map.remove() }
   }, [ onMapClick ])
 

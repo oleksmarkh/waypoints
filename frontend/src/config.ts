@@ -35,5 +35,11 @@ export default {
     },
 
     fitBoundsPadding: [ 100, 100 ], // px
+
+    infoBox: {
+      options: {
+        position: 'topright',
+      },
+    },
   },
 }

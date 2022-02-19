@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Waypoint } from '../models/waypoint'
 import WaypointMarker from '../map/WaypointMarker'
 import { retrieveAllWaypoints } from '../api/waypoints'
+import Sidebar from './Sidebar'
 import Map from './Map'
 
 import './App.scss'
@@ -18,14 +19,14 @@ export default function App(): JSX.Element {
   }, [])
 
   useEffect(() => {
-    retrieveAllWaypoints().then(
-      (waypointList) => setWaypointList(waypointList),
-      console.error,
-    )
+    retrieveAllWaypoints().then(setWaypointList, console.error)
   }, [])
 
   return (
     <main className="App">
+      <Sidebar
+        waypointList={waypointList}
+      />
       <Map
         waypointList={waypointList}
         onMapClick={onMapClick}

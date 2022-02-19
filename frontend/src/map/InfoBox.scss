@@ -1,0 +1,10 @@
+@import "../styles/grid.scss";
+@import "../styles/colors.scss";
+
+.InfoBox {
+  width: 13rem;
+  max-width: calc(100% - 5.25rem);
+  padding: $gap--small;
+  background-color: $color--grey-97;
+  text-align: right;
+}

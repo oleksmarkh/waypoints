@@ -1,0 +1,9 @@
+@import "../styles/grid.scss";
+
+.Sidebar__waypoint-list {
+  display: grid;
+  gap: $gap--small;
+  padding: $gap--small;
+  max-height: calc(100vh - 2 * $gap--small);
+  overflow: auto;
+}

@@ -57,7 +57,6 @@
 * Check Lighthouse reports, including accessibility recommendations.
 * Unit tests.
 * Storybook stories.
-* Dark/light modes.
 
 ## Commands
 ### Backend
