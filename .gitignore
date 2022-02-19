@@ -3,5 +3,4 @@
 __pycache__
 .pytest_cache
 
-backend/db/dump.sql
-frontend/node_modules
+node_modules
