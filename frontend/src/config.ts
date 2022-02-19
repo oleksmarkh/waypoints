@@ -1,7 +1,19 @@
+if (process.env.REACT_APP__API_URL_ROOT === undefined) {
+  throw new Error('REACT_APP__API_URL_ROOT env var is not set')
+}
+if (process.env.REACT_APP__MAPBOX_ACCESS_TOKEN === undefined) {
+  throw new Error('REACT_APP__MAPBOX_ACCESS_TOKEN env var is not set')
+}
+
 export default {
+  env: {
+    API_URL_ROOT: process.env.REACT_APP__API_URL_ROOT,
+    MAPBOX_ACCESS_TOKEN: process.env.REACT_APP__MAPBOX_ACCESS_TOKEN,
+  },
+
   map: {
     defaultView: {
-      center: [52.52, 13.4], // Berlin
+      center: [ 52.52, 13.4 ], // Berlin
       zoom: 12,
     },
 
