@@ -8,10 +8,22 @@
 * Backend API utilizes only default FastAPI logging and no volume is mount for keeping/rotating/streaming the logs.
 * No centralized error reporting.
 * No auto-recovery, no monitoring rather than Docker tools.
+* No functional tests against HTTP methods.
+* Pagination is only implemented for the backend.
 * Frontend is not containerized, since:
   * It doesn't require a runtime for serving bundled static files.
   * There's no CI/CD.
 * Credentials are stored in `.env` files, no specific secrets-management.
+
+## TODO
+### Backend
+* Unit tests.
+### Frontend
+* Manually test for basic layout responsiveness.
+* Manually test against backend unavailability/failures and slow network.
+* Check Lighthouse reports, including accessibility recommendations.
+* Unit tests.
+* Storybook stories.
 
 ## Dependencies
 ### Backend
@@ -46,17 +58,6 @@
 * linters: [`eslint`](https://eslint.org/) + [`stylelint`](https://stylelint.io/)
 * unit tests: [`jest`](https://jestjs.io/)
 * components in isolation: [`storybook`](https://storybook.js.org/docs/react/get-started/whats-a-story)
-
-## TODO
-### Backend
-* Unit tests.
-* Functional tests against HTTP methods.
-### Frontend
-* Test for basic layout responsiveness.
-* Test against slow network.
-* Check Lighthouse reports, including accessibility recommendations.
-* Unit tests.
-* Storybook stories.
 
 ## Commands
 ### Backend

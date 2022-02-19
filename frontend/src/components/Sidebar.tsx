@@ -7,6 +7,9 @@ interface SidebarProps {
   waypointList: Waypoint[];
 }
 
+// TODO:
+// * always render an empty waypoint item as a form (name, coords)
+// * update its coords when user clicks on the map
 export default function Sidebar({ waypointList }: SidebarProps): JSX.Element {
   return (
     <aside className="Sidebar">

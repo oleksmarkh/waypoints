@@ -7,6 +7,9 @@ interface WaypointItemProps {
   waypoint: Waypoint;
 }
 
+// TODO:
+// * introduce "edit" and "delete" buttons
+// * "edit" turns an item into a form, allowing to update waypoint name and submit
 export default function WaypointItem({ waypoint }: WaypointItemProps): JSX.Element {
   const { lat, lng } = waypoint.coords
 
