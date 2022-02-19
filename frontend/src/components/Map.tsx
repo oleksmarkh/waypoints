@@ -5,33 +5,36 @@ import * as L from 'leaflet'
 import config from '../config'
 import { Waypoint } from '../models/waypoint'
 import createMap from '../map/map'
+import WaypointMarker from '../map/WaypointMarker'
 import MarkerPopup from './MarkerPopup'
 
 interface MapProps {
   waypointList: Waypoint[];
-  onClick: (event: L.LeafletMouseEvent) => void;
+  onMapClick: (event: L.LeafletMouseEvent) => void;
+  onMarkerClick: (event: L.LeafletMouseEvent) => void;
 }
 
-function createWaypointMarker(waypoint: Waypoint): L.Marker {
-  const marker = L.marker(waypoint.coords)
-  marker.bindPopup(renderToStaticMarkup((
-    <MarkerPopup
-      waypoint={waypoint}
-    />
-  )))
+function createWaypointMarker(
+  waypoint: Waypoint, onClick: (event: L.LeafletMouseEvent) => void,
+): WaypointMarker {
+  const marker = new WaypointMarker(waypoint.coords, waypoint)
+  marker.on('click', onClick)
+  marker.bindPopup(renderToStaticMarkup(<MarkerPopup waypoint={waypoint} />))
   return marker
 }
 
-export default function Map({ waypointList, onClick }: MapProps): JSX.Element {
+export default function Map(
+  { waypointList, onMapClick, onMarkerClick }: MapProps,
+): JSX.Element {
   const mapRef = useRef<L.Map | undefined>()
   const markerGroupRef = useRef<L.FeatureGroup | undefined>()
 
   useEffect(() => {
     const map = createMap(false)
-    map.on('click', onClick)
+    map.on('click', onMapClick)
     mapRef.current = map
     return () => { map.remove() }
-  }, [ onClick ])
+  }, [ onMapClick ])
 
   useEffect(() => {
     if (markerGroupRef.current !== undefined) {
@@ -43,10 +46,12 @@ export default function Map({ waypointList, onClick }: MapProps): JSX.Element {
     }
 
     const padding = config.map.fitBoundsPadding as [number, number]
-    markerGroupRef.current = L.featureGroup(waypointList.map(createWaypointMarker))
+    markerGroupRef.current = L.featureGroup(waypointList.map(
+      (waypoint) => createWaypointMarker(waypoint, onMarkerClick),
+    ))
     markerGroupRef.current.addTo(mapRef.current)
     mapRef.current.fitBounds(markerGroupRef.current.getBounds(), { padding })
-  }, [ waypointList ])
+  }, [ waypointList, onMarkerClick ])
 
   return (
     <div id="map" />
