@@ -2,16 +2,14 @@ version: "3"
 
 services:
   db:
-    # https://github.com/docker-library/docs/tree/master/postgres
-    # image: postgres:14.2-alpine
     # https://github.com/postgis/docker-postgis/
     image: postgis/postgis:14-3.2-alpine
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: waypoints
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DB: $DB_NAME
 
   api:
     build: ./api/
@@ -27,6 +25,6 @@ services:
     environment:
       DB_HOST: db
       DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: secret
-      DB_NAME: waypoints
+      DB_USER: $DB_USER
+      DB_PASSWORD: $DB_PASSWORD
+      DB_NAME: $DB_NAME

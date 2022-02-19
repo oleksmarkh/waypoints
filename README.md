@@ -41,13 +41,14 @@
 ## Commands
 ### Backend
 ```bash
+$ cd ./backend/  # the folder containing the ".env" file for docker-compose
 $ docker-compose up --build
-$ docker-compose up -d
+$ docker-compose up
 # visit http://localhost:8000/ and http://localhost:8000/docs
 
+$ docker logs -f <container-id>
 $ docker-compose ps -a
 $ docker-compose down
-$ docker logs -f <container-id>
 $ docker image prune
 ```
 
