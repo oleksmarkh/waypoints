@@ -33,5 +33,7 @@ export default {
         ].join(', '),
       },
     },
+
+    fitBoundsPadding: [ 100, 100 ], // px
   },
 }
