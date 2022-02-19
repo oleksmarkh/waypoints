@@ -1,4 +1,6 @@
 import * as L from 'leaflet'
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'
+import 'leaflet-defaulticon-compatibility'
 
 import config from '../config'
 
