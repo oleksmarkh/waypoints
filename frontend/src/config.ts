@@ -13,7 +13,7 @@ export default {
 
   map: {
     defaultView: {
-      center: [ 52.52, 13.4 ], // Berlin
+      center: { lat: 52.52, lng: 13.4 }, // Berlin
       zoom: 12,
     },
 

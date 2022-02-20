@@ -1,10 +1,10 @@
-import { Waypoint } from '../models/waypoint'
-import { dateIsoStrToLocaleStr } from '../utils/convert'
+import { Waypoint, WaypointToCreate } from '../models/waypoint'
+import { coordToFixed, dateIsoStrToLocaleStr } from '../utils/convert'
 
 import './WaypointItem.scss'
 
 interface WaypointItemProps {
-  waypoint: Waypoint;
+  waypoint: Waypoint | WaypointToCreate;
 }
 
 // TODO:
@@ -17,8 +17,11 @@ export default function WaypointItem({ waypoint }: WaypointItemProps): JSX.Eleme
     <section className="WaypointItem">
       <ul className="WaypointItem__attr-list">
         <li>name: {waypoint.name}</li>
-        <li>coords: lat={lat}, lng={lng}</li>
-        <li>created at: {dateIsoStrToLocaleStr(waypoint.created_at)}</li>
+        <li>coords: lat={coordToFixed(lat)}, lng={coordToFixed(lng)}</li>
+
+        {('created_at' in waypoint) && (
+          <li>created at: {dateIsoStrToLocaleStr(waypoint.created_at)}</li>
+        )}
       </ul>
     </section>
   )

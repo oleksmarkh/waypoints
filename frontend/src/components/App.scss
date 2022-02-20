@@ -1,5 +1,5 @@
 .App {
   height: 100vh;
   display: grid;
-  grid-template-columns: minmax(12rem, 16rem) auto;
+  grid-template-columns: minmax(12rem, max-content) auto;
 }

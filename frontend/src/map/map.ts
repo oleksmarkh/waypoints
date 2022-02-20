@@ -31,7 +31,7 @@ function getTileLayerOptions(isDarkMode: boolean): MapTileLayerOptions {
 
 export default function createMap(isDarkMode: boolean): L.Map {
   const { defaultView: { center, zoom }, tileLayer: { urlTemplate } } = config.map
-  const map = L.map('map').setView(center as [number, number], zoom)
+  const map = L.map('map').setView(center, zoom)
   const tileLayer = L.tileLayer(urlTemplate, getTileLayerOptions(isDarkMode))
   tileLayer.addTo(map)
   return map

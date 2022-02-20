@@ -3,9 +3,12 @@ interface Coords {
   lng: number;
 }
 
-export interface Waypoint {
-  id: number;
+export interface WaypointToCreate {
   name: string;
   coords: Coords;
+}
+
+export interface Waypoint extends WaypointToCreate {
+  id: number;
   created_at: string;
 }

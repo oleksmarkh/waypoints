@@ -1,9 +1,10 @@
 # Waypoints
 ## Project structure
 ```bash
+# $ tree .
 ```
 
-## API
+## Backend API
 ```
 GET     /waypoints/      Get Waypoint List (latest to earliest)
 GET     /waypoints/{id}  Get Waypoint
@@ -11,6 +12,9 @@ POST    /waypoints/      Create Waypoint (name and coords)
 POST    /waypoints/{id}  Update Waypoint (name only)
 DELETE  /waypoints/{id}  Delete Waypoint
 ```
+
+### Frontend screenshot
+TBD
 
 ## Simplifications
 * Frontend is not containerized, since:

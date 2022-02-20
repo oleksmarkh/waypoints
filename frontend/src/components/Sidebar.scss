@@ -1,4 +1,10 @@
 @import "../styles/grid.scss";
+@import "../styles/fonts.scss";
+
+.Sidebar__header {
+  margin: 0;
+  font-size: $font-size--large;
+}
 
 .Sidebar__waypoint-list {
   display: grid;
