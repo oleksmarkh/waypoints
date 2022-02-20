@@ -36,7 +36,7 @@ DELETE  /waypoints/{id}  Delete Waypoint
 
 ### Frontend
 * Pagination for `GET /waypoints/` (already supported by the API).
-* Color-code markers depending on waypoint state: new (not created yet), editing, failed to update/delete.
+* Color-code markers depending on waypoint state: editing, failed to create/update/delete.
 * Interactivity between sidebar items and map markers, as they represent same waypoints:
   * Highlight on hover:
     * Enlarge the marker.
@@ -65,7 +65,7 @@ DELETE  /waypoints/{id}  Delete Waypoint
 
 #### DB
 * SQL engine/dialect: [PostgreSQL](https://www.postgresql.org/docs/14/index.html)
-* spatial extension: [PostGIS](https://postgis.net/docs/)
+* spatial extension: [PostGIS](https://postgis.net/docs/) (an overkill for current case, but enables geometry-based queries/computations to further extend the API)
 
 #### Python env
 * env/deps management: [`poetry`](https://python-poetry.org/docs/basic-usage/)
@@ -83,7 +83,6 @@ DELETE  /waypoints/{id}  Delete Waypoint
 #### App runtime
 * UI framework: [`react`](https://reactjs.org/docs/)
 * map rendering/interactions: [`leaflet`](http://leafletjs.com/)
-* CSS class names util: [`classnames`](https://github.com/JedWatson/classnames/)
 
 #### Dev env
 * language/compiler: [`typescript`](https://www.typescriptlang.org/docs/)
