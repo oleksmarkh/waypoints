@@ -1,7 +1,53 @@
 # Waypoints
 ## Project structure
 ```bash
-# $ tree .
+├── backend/
+│   ├── api/
+│   │   ├── src/
+│   │   │   ├── convert.py  # coords and model conversion
+│   │   │   ├── crud.py     # DB ORM accessors
+│   │   │   ├── db.py       # DB connector
+│   │   │   ├── main.py     # FastAPI web server entry point, HTTP->CRUD controller
+│   │   │   ├── models.py   # DB ORM model
+│   │   │   └── schemas.py  # HTTP request/response schemas (model representations)
+│   │   ├── Dockerfile
+│   │   ├── poetry.lock
+│   │   ├── pyproject.toml
+│   │   ├── setup.cfg
+│   │   └── wait-for-postgres.sh  # script to delay API entry command until DB is ready
+│   ├── .env  # DB credentials
+│   └── docker-compose.yml
+├── frontend/
+│   ├── public/
+│   │   └── index.html
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── waypoints.ts  # API bindings
+│   │   ├── components/  # React components
+│   │   │   ├── App.tsx           # collection manager (main component)
+│   │   │   ├── Map.tsx           # map/marker manager
+│   │   │   ├── MarkerPopup.tsx   # popup content for static render
+│   │   │   ├── Sidebar.tsx       # item list, event handler proxy
+│   │   │   └── WaypointItem.tsx  # editable/removable list item
+│   │   ├── map/  # Leaflet objects
+│   │   │   ├── InfoBox.ts         # top-right message
+│   │   │   ├── WaypointMarker.ts  # extends marker to attach data
+│   │   │   └── map.ts             #  map initializer
+│   │   ├── models/
+│   │   │   └── waypoint.ts  # TS interface
+│   │   ├── styles/  # body CSS and Sass consts to import in component styles
+│   │   ├── utils/
+│   │   │   ├── convert.ts  # formatters
+│   │   │   ├── http.ts     # fetch() wrappers
+│   │   │   └── list.ts     # collection manipulation (immutable)
+│   │   ├── config.ts  # env vars and map config
+│   │   └── index.tsx  # app entry point
+│   ├── .env  # API root URL and Mapbox token
+│   ├── package-lock.json
+│   ├── package.json
+│   └── tsconfig.json
+├── README.md
+└── assignment.md
 ```
 
 ## Backend API

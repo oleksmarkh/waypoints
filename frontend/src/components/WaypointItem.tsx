@@ -21,7 +21,11 @@ export default function WaypointItem(
   const handleCloseButtonClick = (): void => setIsEditMode(false)
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     onFormSubmit(event)
-    setIsEditMode(false)
+
+    // edit mode should not be exited for "WaypointToCreate"
+    if ('id' in waypoint) {
+      setIsEditMode(false)
+    }
   }
 
   // Buttons have the "key" prop set, allowing React to distinguish between buttons after rerender.
