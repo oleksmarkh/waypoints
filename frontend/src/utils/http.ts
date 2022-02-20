@@ -1,5 +1,10 @@
 export async function get<ResponseData>(url: string): Promise<ResponseData> {
   const response = await fetch(url)
+
+  if (!response.ok) {
+    throw new Error(`API error, status: ${response.status}, method: GET, url: ${url}`)
+  }
+
   return await (response.json() as Promise<ResponseData>)
 }
 
@@ -11,9 +16,20 @@ export async function post<RequestData, ResponseData>(url: string, data: Request
     },
     body: JSON.stringify(data),
   })
+
+  if (!response.ok) {
+    throw new Error(`API error, status: ${response.status}, method: POST, url: ${url}`)
+  }
+
   return await (response.json() as Promise<ResponseData>)
 }
 
 export async function remove(url: string): Promise<Response> {
-  return await fetch(url, { method: 'DELETE' })
+  const response = await fetch(url, { method: 'DELETE' })
+
+  if (!response.ok) {
+    throw new Error(`API error, status: ${response.status}, method: DELETE, url: ${url}`)
+  }
+
+  return response
 }

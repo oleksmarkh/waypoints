@@ -6,7 +6,8 @@ const { API_URL_ROOT } = config.env
 const endpointUrl = `${API_URL_ROOT}/waypoints/`
 
 // All transport methods return promises transparently,
-// allowing callers to catch/log possible errors: network, API, JSON parsing.
+// allowing callers to catch/log possible rejections
+// caused by network, API, or JSON parsing errors.
 
 export function retrieveAllWaypoints(): Promise<Waypoint[]> {
   return get<Waypoint[]>(endpointUrl)

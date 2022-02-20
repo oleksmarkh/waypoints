@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
@@ -77,9 +77,9 @@ def update_waypoint(id: int, waypoint: schemas.WaypointUpdate, db: Session = Dep
   return model_to_schema(db_waypoint)
 
 
-@app.delete("/waypoints/{id}", status_code=204, tags=["delete waypoint"])
+@app.delete("/waypoints/{id}", tags=["delete waypoint"])
 def delete_waypoint(id: int, db: Session = Depends(get_db)):
   is_deleted = crud.delete_waypoint(db, id)
   if not is_deleted:
     raise HTTPException(status_code=404, detail=f"Waypoint not found: {id}")
-  return ''
+  return Response(status_code=204)
