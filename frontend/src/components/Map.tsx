@@ -61,12 +61,16 @@ export default function Map(
       return
     }
 
-    const padding = config.map.fitBoundsPadding as [number, number]
     markerGroupRef.current = L.featureGroup(waypointList.map(
       (waypoint) => createWaypointMarker(waypoint, onMarkerClick),
     ))
+
+    const padding = config.map.fitBoundsPadding as [number, number]
+    const bounds = markerGroupRef.current.getBounds()
+
+    bounds.extend(circleMarkerRef.current.getLatLng())
+    mapRef.current.fitBounds(bounds, { padding })
     markerGroupRef.current.addTo(mapRef.current)
-    mapRef.current.fitBounds(markerGroupRef.current.getBounds(), { padding })
   }, [ waypointList, onMarkerClick ])
 
   return (

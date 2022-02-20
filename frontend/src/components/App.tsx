@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import config from '../config'
-import { Waypoint, WaypointToCreate } from '../models/waypoint'
+import { Waypoint, WaypointToCreate, updateNameInList } from '../models/waypoint'
 import WaypointMarker from '../map/WaypointMarker'
 import { retrieveAllWaypoints } from '../api/waypoints'
 import Sidebar from './Sidebar'
@@ -16,15 +16,33 @@ export default function App(): JSX.Element {
   }), [])
   const [ waypointToCreate, setWaypointToCreate ] = useState<WaypointToCreate>(defaultWaypointToCreate)
   const [ waypointList, setWaypointList ] = useState<Waypoint[]>([])
-  const handleWaypointNameChange = (waypoint: Waypoint | WaypointToCreate, name: string): void => {
-    if (!('id' in waypoint)) {
-      // console.log('waypointToCreate name change:', name)
-      setWaypointToCreate((prevWaypointToCreate) => ({
-        ...prevWaypointToCreate,
-        name,
-      }))
+
+  const handleWaypointNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>, waypoint: Waypoint | WaypointToCreate,
+  ): void => {
+    const { value: name } = event.target
+
+    if ('id' in waypoint) {
+      setWaypointList((prevWaypointList) => updateNameInList(prevWaypointList, waypoint, name))
+    } else {
+      setWaypointToCreate((prevWaypointToCreate) => ({ ...prevWaypointToCreate, name }))
     }
   }
+
+  const handleWaypointFormSubmit = (
+    event: React.FormEvent<HTMLFormElement>, waypoint: Waypoint | WaypointToCreate,
+  ): void => {
+    event.preventDefault()
+    console.log('form submit, waypoint:', waypoint)
+  }
+
+  // the first argument (event) is not used, but it's there for interface consistency among handlers
+  const handleWaypointDeleteButtonClick = (
+    _: React.MouseEvent<HTMLButtonElement, MouseEvent>, waypoint: Waypoint,
+  ): void => {
+    console.log('delete waypoint:', waypoint)
+  }
+
   const handleMapClick = useCallback((event: L.LeafletMouseEvent): void => {
     // console.log('map click, coords:', event.latlng)
     setWaypointToCreate((prevWaypointToCreate) => ({
@@ -32,6 +50,7 @@ export default function App(): JSX.Element {
       coords: event.latlng,
     }))
   }, [])
+
   const handleMarkerClick = useCallback((event: L.LeafletMouseEvent): void => {
     const marker = event.target as WaypointMarker
     console.log('marker click, waypoint:', marker.waypoint)
@@ -47,7 +66,9 @@ export default function App(): JSX.Element {
       <Sidebar
         waypointToCreate={waypointToCreate}
         waypointList={waypointList}
-        onWaypointNameChange={handleWaypointNameChange}
+        onWaypointNameInputChange={handleWaypointNameChange}
+        onWaypointFormSubmit={handleWaypointFormSubmit}
+        onWaypointDeleteButtonClick={handleWaypointDeleteButtonClick}
       />
       <Map
         waypointToCreate={waypointToCreate}

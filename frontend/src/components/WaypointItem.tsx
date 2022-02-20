@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import React, { useState } from 'react'
 
 import { Waypoint, WaypointToCreate } from '../models/waypoint'
 import { coordToFixed, dateIsoStrToLocaleStr } from '../utils/convert'
@@ -7,22 +7,28 @@ import './WaypointItem.scss'
 
 interface WaypointItemProps {
   waypoint: Waypoint | WaypointToCreate;
-  onNameInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onNameInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onDeleteButtonClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 // TODO:
 // * introduce "edit" and "delete" buttons for waypoints with IDs
 // * "edit" turns an item into a form, allowing to update waypoint name and submit
 export default function WaypointItem(
-  { waypoint, onNameInputChange }: WaypointItemProps,
+  { waypoint, onNameInputChange, onFormSubmit, onDeleteButtonClick }: WaypointItemProps,
 ): JSX.Element {
   const [ isEditMode, setIsEditMode ] = useState<boolean>(!('id' in waypoint))
-  const handleEditClick = (): void => setIsEditMode(true)
   const { lat, lng } = waypoint.coords
+  const handleEditClick = (): void => setIsEditMode(true)
+  const handleCloseClick = (): void => setIsEditMode(false)
 
+  // Buttons have the "key" prop set, allowing React to distinguish between buttons after rerender.
   return (
     <section className="WaypointItem">
-      <form className="WaypointItem__form" onSubmit={(event) => event.preventDefault()}>
+      <form className="WaypointItem__form" onSubmit={onFormSubmit}>
+        <input hidden readOnly name="waypoint-id" value={'id' in waypoint ? waypoint.id : undefined} />
+
         <ul className="WaypointItem__attr-list">
           <li className="WaypointItem__attr-item">
             <label className="WaypointItem__attr-label">
@@ -50,13 +56,18 @@ export default function WaypointItem(
 
         <div className="WaypointItem__button-panel">
           {isEditMode ? (
-            <button type="submit">Save</button>
+            <React.Fragment>
+              {'id' in waypoint && (
+                <button key="close" type="button" onClick={handleCloseClick}>Close</button>
+              )}
+              <button key="save" type="submit">Save</button>
+            </React.Fragment>
           ) : (
-            <button onClick={handleEditClick}>Edit</button>
+            <button key="edit" type="button" onClick={handleEditClick}>Edit</button>
           )}
 
           {'id' in waypoint && (
-            <button>Delete</button>
+            <button key="delete" type="button" onClick={onDeleteButtonClick}>Delete</button>
           )}
         </div>
       </form>

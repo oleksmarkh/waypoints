@@ -1,5 +1,6 @@
 @import "../styles/grid.scss";
 @import "../styles/colors.scss";
+@import "../styles/fonts.scss";
 
 .WaypointItem {
   padding: $gap--small;
@@ -23,7 +24,7 @@
 }
 
 .WaypointItem__attr-item {
-  line-height: $line-height--medium;
+  line-height: $line-height--large;
 }
 
 .WaypointItem__attr-label {

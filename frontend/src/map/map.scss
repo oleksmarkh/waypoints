@@ -1,4 +1,10 @@
-.App .leaflet-container {
-  height: 100%;
-  cursor: default;
+.App {
+  .leaflet-container {
+    height: 100%;
+    cursor: default;
+  }
+
+  .leaflet-top.leaflet-right {
+    width: 100%;
+  }
 }

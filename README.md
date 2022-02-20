@@ -17,6 +17,9 @@ DELETE  /waypoints/{id}  Delete Waypoint
 TBD
 
 ## Simplifications
+* Repeated worlds are not supported:
+  * Backend: `lat in [-90, 90]`, `lng in [-180, 180]` validation is applied.
+  * Frontend: no coords wrapping, no markers duplication (default Leaflet behavior).
 * Frontend is not containerized, since:
   * Serving prod-bundled static files doesn't require a runtime.
   * Platform-specific differences in build tools binaries don't affect the bundle.
