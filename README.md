@@ -14,7 +14,7 @@ DELETE  /waypoints/{id}  Delete Waypoint
 ```
 
 ### Frontend screenshot
-TBD
+<img src="frontend/screenshot.png" width="800" alt="frontend screenshot" />
 
 ## Simplifications
 * Repeated worlds are not supported:
@@ -44,7 +44,7 @@ TBD
   * Select on click:
     * Marker click: scroll the sidebar list to the corresponding item.
     * Sidebar item click: reposition the map on the marker, if it was outside of the viewport.
-* More elaborated error handling and reporting, to distinguish:
+* More elaborated error handling and reporting, to distinguish and reflect in UI:
   * Network unavailability.
   * Non-2xx API responses.
   * JSON parsing errors.

@@ -17,13 +17,17 @@ export default function WaypointItem(
 ): JSX.Element {
   const [ isEditMode, setIsEditMode ] = useState<boolean>(!('id' in waypoint))
   const { lat, lng } = waypoint.coords
-  const handleEditClick = (): void => setIsEditMode(true)
-  const handleCloseClick = (): void => setIsEditMode(false)
+  const handleEditButtonClick = (): void => setIsEditMode(true)
+  const handleCloseButtonClick = (): void => setIsEditMode(false)
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    onFormSubmit(event)
+    setIsEditMode(false)
+  }
 
   // Buttons have the "key" prop set, allowing React to distinguish between buttons after rerender.
   return (
     <section className="WaypointItem">
-      <form className="WaypointItem__form" onSubmit={onFormSubmit}>
+      <form className="WaypointItem__form" onSubmit={handleFormSubmit}>
         <input hidden readOnly name="waypoint-id" value={'id' in waypoint ? waypoint.id : undefined} />
 
         <ul className="WaypointItem__attr-list">
@@ -55,12 +59,12 @@ export default function WaypointItem(
           {isEditMode ? (
             <React.Fragment>
               {'id' in waypoint && (
-                <button key="close" type="button" onClick={handleCloseClick}>Close</button>
+                <button key="close" type="button" onClick={handleCloseButtonClick}>Close</button>
               )}
               <button key="save" type="submit">Save</button>
             </React.Fragment>
           ) : (
-            <button key="edit" type="button" onClick={handleEditClick}>Edit</button>
+            <button key="edit" type="button" onClick={handleEditButtonClick}>Edit</button>
           )}
 
           {'id' in waypoint && (
