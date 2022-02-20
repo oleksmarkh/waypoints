@@ -4,15 +4,10 @@ import { Waypoint } from '../models/waypoint'
 const { API_URL_ROOT } = config.env
 const endpointUrl = `${API_URL_ROOT}/waypoints/`
 
-export async function retrieveAllWaypoints(): Promise<Waypoint[]> {
-  try {
-    const response = await fetch(endpointUrl)
-    return await response.json() as Waypoint[]
-  } catch (error) {
-    // possible errors: network, API, JSON parsing
-    console.error(error)
-  }
-  return []
+export function retrieveAllWaypoints(): Promise<Waypoint[]> {
+  // possible errors: network, API, JSON parsing
+  return fetch(endpointUrl)
+    .then((response) => response.json() as Promise<Waypoint[]>)
 }
 
 // TODO: update and delete

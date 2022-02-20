@@ -28,6 +28,10 @@ DELETE  /waypoints/{id}  Delete Waypoint
 
 ### Frontend
 * Pagination for `GET /waypoints/` (already supported by the API).
+* More elaborated error handling and reporting, to distinguish:
+  * Network unavailability.
+  * Non-2xx API responses.
+  * JSON parsing errors.
 * Offline mode, allowing to manage waypoint collection locally until network/API becomes available.
 * Component tests, functional tests against mocked API.
 
