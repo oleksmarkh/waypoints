@@ -5,10 +5,10 @@
 
 ## API
 ```
-GET     /waypoints/      Get Waypoint List
-POST    /waypoints/      Create Waypoint
+GET     /waypoints/      Get Waypoint List (latest to earliest)
 GET     /waypoints/{id}  Get Waypoint
-POST    /waypoints/{id}  Update Waypoint
+POST    /waypoints/      Create Waypoint (name and coords)
+POST    /waypoints/{id}  Update Waypoint (name only)
 DELETE  /waypoints/{id}  Delete Waypoint
 ```
 
@@ -28,6 +28,14 @@ DELETE  /waypoints/{id}  Delete Waypoint
 
 ### Frontend
 * Pagination for `GET /waypoints/` (already supported by the API).
+* Color-code markers depending on waypoint state: new (not created yet), editing, failed to update/delete.
+* Interactivity between sidebar items and map markers, as they represent same waypoints:
+  * Highlight on hover:
+    * Enlarge the marker.
+    * Change sidebar item background color.
+  * Select on click:
+    * Marker click: scroll the sidebar list to the corresponding item.
+    * Sidebar item click: reposition the map on the marker, if it was outside of the viewport.
 * More elaborated error handling and reporting, to distinguish:
   * Network unavailability.
   * Non-2xx API responses.

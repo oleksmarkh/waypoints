@@ -1,4 +1,5 @@
 from unicodedata import name
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from . import models, schemas
@@ -10,7 +11,7 @@ def get_waypoint(db: Session, id: int) -> models.Waypoint | None:
 
 
 def get_waypoint_list(db: Session, skip: int, limit: int) -> list[models.Waypoint]:
-  return db.query(models.Waypoint).offset(skip).limit(limit).all()
+  return db.query(models.Waypoint).order_by(desc(models.Waypoint.id)).offset(skip).limit(limit).all()
 
 
 def create_waypoint(db: Session, waypoint: schemas.WaypointCreate) -> models.Waypoint:
