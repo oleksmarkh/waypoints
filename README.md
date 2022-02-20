@@ -1,27 +1,40 @@
 # Waypoints
-## Structure
+## Project structure
 ```bash
 ```
 
+## API
+```
+GET     /waypoints/      Get Waypoint List
+POST    /waypoints/      Create Waypoint
+GET     /waypoints/{id}  Get Waypoint
+POST    /waypoints/{id}  Update Waypoint
+DELETE  /waypoints/{id}  Delete Waypoint
+```
+
 ## Simplifications
-* DB files aren't mount to any volume.
-* Backend API utilizes only default FastAPI logging and no volume is mount for keeping/rotating/streaming the logs.
-* No centralized error reporting.
-* No auto-recovery, no monitoring rather than Docker tools.
-* No functional tests against HTTP methods.
-* Pagination is only implemented for the backend.
 * Frontend is not containerized, since:
-  * It doesn't require a runtime for serving bundled static files.
+  * Serving prod-bundled static files doesn't require a runtime.
+  * Platform-specific differences in build tools binaries don't affect the bundle.
   * There's no CI/CD.
 * Credentials are stored in `.env` files, no specific secrets-management.
+
+## Further improvements
+### Backend
+* Mount a volume to persist DB files.
+* Mount a volume to keep/rotate/stream logs, set up more elaborated logging (other than default FastAPI one).
+* Set up centralized error reporting, monitoring (other than default Docker tooling) and auto-recovery.
+* Functional tests against HTTP methods.
+
+### Frontend
+* Pagination for `GET /waypoints/` (already supported by the API).
+* Offline mode, allowing to manage waypoint collection locally until network/API becomes available.
+* Component tests, functional tests against mocked API.
 
 ## TODO
 ### Backend
 * Unit tests.
 ### Frontend
-* Manually test for basic layout responsiveness.
-* Manually test against backend unavailability/failures and slow network.
-* Check Lighthouse reports, including accessibility recommendations.
 * Unit tests.
 * Storybook stories.
 
@@ -62,9 +75,10 @@
 ## Commands
 ### Backend
 ```bash
+# assumes Docker version "20.10.12"
 $ cd ./backend/  # contains ".env" file for docker-compose
-$ docker-compose up --build
 $ docker-compose up
+# $ docker-compose up --build
 # visit http://localhost:8000/docs for Swagger UI
 
 $ docker logs -f <container-id>
@@ -99,3 +113,12 @@ $ npm start          # run a local CRA dev server
 $ npm run build      # produce a build artifact
 $ npm run serve      # run a local Python web server in "./build/"
 ```
+
+## Basic manual tests
+### Backend
+* GET/POST/DELETE against endpoints via [Swagger UI](http://localhost:8000/docs).
+
+### Frontend
+* For layout responsiveness.
+* Against backend unavailability/failures and slow network.
+* Lighthouse reports, including accessibility recommendations.

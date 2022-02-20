@@ -27,7 +27,7 @@ def get_db():
 
 
 @app.get("/waypoints/", response_model=list[schemas.Waypoint])
-def get_waypoint_list(skip: int = 0, limit: int = 20, db: Session = Depends(get_db)) -> list[models.Waypoint]:
+def get_waypoint_list(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)) -> list[models.Waypoint]:
   db_waypoint_list = crud.get_waypoint_list(db, skip=skip, limit=limit)
   return [model_to_schema(db_waypoint) for db_waypoint in db_waypoint_list]
 
