@@ -16,16 +16,25 @@ export default function App(): JSX.Element {
   }), [])
   const [ waypointToCreate, setWaypointToCreate ] = useState<WaypointToCreate>(defaultWaypointToCreate)
   const [ waypointList, setWaypointList ] = useState<Waypoint[]>([])
-  const onMapClick = useCallback((event: L.LeafletMouseEvent): void => {
-    console.log(`map click, coords:`, event.latlng)
+  const handleWaypointNameChange = (waypoint: Waypoint | WaypointToCreate, name: string): void => {
+    if (!('id' in waypoint)) {
+      // console.log('waypointToCreate name change:', name)
+      setWaypointToCreate((prevWaypointToCreate) => ({
+        ...prevWaypointToCreate,
+        name,
+      }))
+    }
+  }
+  const handleMapClick = useCallback((event: L.LeafletMouseEvent): void => {
+    // console.log('map click, coords:', event.latlng)
     setWaypointToCreate((prevWaypointToCreate) => ({
       ...prevWaypointToCreate,
       coords: event.latlng,
     }))
   }, [])
-  const onMarkerClick = useCallback((event: L.LeafletMouseEvent): void => {
+  const handleMarkerClick = useCallback((event: L.LeafletMouseEvent): void => {
     const marker = event.target as WaypointMarker
-    console.log(`marker click, waypoint:`, marker.waypoint)
+    console.log('marker click, waypoint:', marker.waypoint)
     // not implemented, see "Further improvements -> Frontend -> Interactivity..." in README
   }, [])
 
@@ -38,12 +47,13 @@ export default function App(): JSX.Element {
       <Sidebar
         waypointToCreate={waypointToCreate}
         waypointList={waypointList}
-        />
+        onWaypointNameChange={handleWaypointNameChange}
+      />
       <Map
         waypointToCreate={waypointToCreate}
         waypointList={waypointList}
-        onMapClick={onMapClick}
-        onMarkerClick={onMarkerClick}
+        onMapClick={handleMapClick}
+        onMarkerClick={handleMarkerClick}
       />
     </main>
   )

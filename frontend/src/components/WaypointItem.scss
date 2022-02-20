@@ -11,10 +11,34 @@
   }
 }
 
-.WaypointItem__attr-list {
+.WaypointItem__form {
   display: grid;
   gap: $gap--extra-small;
+}
+
+.WaypointItem__attr-list {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.WaypointItem__attr-item {
+  line-height: $line-height--medium;
+}
+
+.WaypointItem__attr-label {
+  display: grid;
+  grid-template-columns: max-content auto;
+  align-items: baseline;
+}
+
+.WaypointItem__attr-caption {
+  margin-right: $gap--extra-small;
+  color: $color--grey-40;
+}
+
+.WaypointItem__button-panel {
+  display: flex;
+  justify-content: right;
+  gap: $gap--small;
 }

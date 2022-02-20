@@ -6,13 +6,11 @@ import './Sidebar.scss'
 interface SidebarProps {
   waypointToCreate: WaypointToCreate;
   waypointList: Waypoint[];
+  onWaypointNameChange: (waypoint: Waypoint | WaypointToCreate, name: string) => void;
 }
 
-// TODO:
-// * always render an empty waypoint item as a form (name, coords)
-// * update its coords when user clicks on the map
 export default function Sidebar(
-  { waypointToCreate, waypointList }: SidebarProps,
+  { waypointToCreate, waypointList, onWaypointNameChange }: SidebarProps,
 ): JSX.Element {
   return (
     <aside className="Sidebar">
@@ -21,7 +19,8 @@ export default function Sidebar(
         <WaypointItem
           key="to-create"
           waypoint={waypointToCreate}
-          />
+          onNameInputChange={(event) => onWaypointNameChange(waypointToCreate, event.target.value)}
+        />
 
         {waypointList.length > 0 && (
           <h3 className="Sidebar__header">Created waypoints:</h3>
@@ -30,6 +29,7 @@ export default function Sidebar(
           <WaypointItem
             key={waypoint.id}
             waypoint={waypoint}
+            onNameInputChange={(event) => onWaypointNameChange(waypoint, event.target.value)}
           />
         ))}
       </div>
