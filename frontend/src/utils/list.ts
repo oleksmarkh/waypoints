@@ -8,6 +8,6 @@ export function prependToList<Item>(list: Item[], item: Item): Item[] {
   return [ item ].concat(list)
 }
 
-export function deleteFromList<Item>(list: Item[], item: Item): Item[] {
+export function excludeFromList<Item>(list: Item[], item: Item): Item[] {
   return list.filter((w) => w !== item)
 }

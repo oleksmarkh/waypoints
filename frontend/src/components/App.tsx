@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import config from '../config'
 import { Waypoint, WaypointToCreate } from '../models/waypoint'
-import { updateInList, prependToList, deleteFromList } from '../utils/list'
+import { updateInList, prependToList, excludeFromList } from '../utils/list'
 import WaypointMarker from '../map/WaypointMarker'
 import { retrieveAllWaypoints, createWaypoint, updateWaypoint, deleteWaypoint } from '../api/waypoints'
 import Sidebar from './Sidebar'
@@ -53,7 +53,7 @@ export default function App(): JSX.Element {
     _: React.MouseEvent<HTMLButtonElement, MouseEvent>, waypoint: Waypoint,
   ): void => {
     deleteWaypoint(waypoint).then(
-      () => setWaypointList((prevWaypointList) => deleteFromList<Waypoint>(prevWaypointList, waypoint)),
+      () => setWaypointList((prevWaypointList) => excludeFromList<Waypoint>(prevWaypointList, waypoint)),
       console.error,
     )
   }

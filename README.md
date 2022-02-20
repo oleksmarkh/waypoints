@@ -101,8 +101,6 @@ DELETE  /waypoints/{id}  Delete Waypoint
 ## TODO
 ### Backend
 * Unit tests.
-### Frontend
-* Unit tests.
 
 ## Dependencies
 ### Backend
