@@ -2,7 +2,6 @@ import os
 from dataclasses import dataclass
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
 
 
 @dataclass
@@ -26,4 +25,3 @@ dbc = DbConfig(
 
 engine = create_engine(f"{dbc.dialect}+{dbc.driver}://{dbc.user}:{dbc.password}@{dbc.host}/{dbc.name}")
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()

@@ -98,10 +98,6 @@ DELETE  /waypoints/{id}  Delete Waypoint
 * Vertical layout split for smaller screens in portrait mode.
 * Storybook stories, component tests, functional tests (with mocked API).
 
-## TODO
-### Backend
-* Unit tests.
-
 ## Dependencies
 ### Backend
 #### Containerization
@@ -151,8 +147,8 @@ $ docker image prune
 
 #### DB
 ```bash
-$ docker-compose exec db pg_dump waypoints -U postgres
 $ docker-compose exec db psql waypoints postgres
+$ docker-compose exec db pg_dump waypoints -U postgres
 ```
 
 #### API

@@ -1,17 +1,18 @@
+from geoalchemy2.types import Geometry
 from geoalchemy2.functions import ST_Point, ST_SetSRID
-from geoalchemy2.shape import to_shape
+from geoalchemy2.shape import to_shape, WKBElement
 
 from . import models, schemas
 
 
-def coords_to_wkt(coords: schemas.Coords) -> str:
+def coords_to_wkt(coords: schemas.Coords) -> Geometry:
   """
-  Converts `{lat, lng}` object to `'SRID=4326;POINT(lng lat)'`.
+  Instructs PostGIS to convert `{lat, lng}` object to `'SRID=4326;POINT(lng lat)'`.
   """
   return ST_SetSRID(ST_Point(coords.lng, coords.lat), 4326)
 
 
-def wkb_to_coords(wkb: str) -> schemas.Coords:
+def wkb_to_coords(wkb: WKBElement) -> schemas.Coords:
   """
   Converts WKB (used by PostGIS) to `{lat, lng}` object.
   """
