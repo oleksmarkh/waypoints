@@ -28,10 +28,11 @@ TBD
 
 ## Further improvements
 ### Backend
+* Stricter validation, allowing only specified fields.
 * Mount a volume to persist DB files.
 * Mount a volume to keep/rotate/stream logs, set up more elaborated logging (other than default FastAPI one).
 * Set up centralized error reporting, monitoring (other than default Docker tooling) and auto-recovery.
-* Functional tests against HTTP methods.
+* Functional tests against HTTP methods (with mocked DB).
 
 ### Frontend
 * Pagination for `GET /waypoints/` (already supported by the API).
@@ -49,7 +50,7 @@ TBD
   * JSON parsing errors.
 * Offline mode, allowing to manage waypoint collection locally until network/API becomes available.
 * Vertical layout split for smaller screens in portrait mode.
-* Storybook stories, component tests, functional tests against mocked API.
+* Storybook stories, component tests, functional tests (with mocked API).
 
 ## TODO
 ### Backend

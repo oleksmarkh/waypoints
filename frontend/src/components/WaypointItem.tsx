@@ -12,9 +12,6 @@ interface WaypointItemProps {
   onDeleteButtonClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-// TODO:
-// * introduce "edit" and "delete" buttons for waypoints with IDs
-// * "edit" turns an item into a form, allowing to update waypoint name and submit
 export default function WaypointItem(
   { waypoint, onNameInputChange, onFormSubmit, onDeleteButtonClick }: WaypointItemProps,
 ): JSX.Element {

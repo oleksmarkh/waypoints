@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import config from '../config'
-import { Waypoint, WaypointToCreate, updateNameInList } from '../models/waypoint'
+import { Waypoint, WaypointToCreate } from '../models/waypoint'
+import { updateInList, prependToList, deleteFromList } from '../utils/list'
 import WaypointMarker from '../map/WaypointMarker'
-import { retrieveAllWaypoints } from '../api/waypoints'
+import { retrieveAllWaypoints, createWaypoint, updateWaypoint, deleteWaypoint } from '../api/waypoints'
 import Sidebar from './Sidebar'
 import Map from './Map'
 
@@ -23,7 +24,7 @@ export default function App(): JSX.Element {
     const { value: name } = event.target
 
     if ('id' in waypoint) {
-      setWaypointList((prevWaypointList) => updateNameInList(prevWaypointList, waypoint, name))
+      setWaypointList((prevWaypointList) => updateInList<Waypoint>(prevWaypointList, waypoint, { name }))
     } else {
       setWaypointToCreate((prevWaypointToCreate) => ({ ...prevWaypointToCreate, name }))
     }
@@ -33,18 +34,31 @@ export default function App(): JSX.Element {
     event: React.FormEvent<HTMLFormElement>, waypoint: Waypoint | WaypointToCreate,
   ): void => {
     event.preventDefault()
-    console.log('form submit, waypoint:', waypoint)
+
+    if ('id' in waypoint) {
+      updateWaypoint(waypoint).catch(console.error)
+    } else {
+      createWaypoint(waypoint).then(
+        (createdWaypoint) => {
+          setWaypointToCreate(defaultWaypointToCreate)
+          setWaypointList((prevWaypointList) => prependToList<Waypoint>(prevWaypointList, createdWaypoint))
+        },
+        console.error,
+      )
+    }
   }
 
   // the first argument (event) is not used, but it's there for interface consistency among handlers
   const handleWaypointDeleteButtonClick = (
     _: React.MouseEvent<HTMLButtonElement, MouseEvent>, waypoint: Waypoint,
   ): void => {
-    console.log('delete waypoint:', waypoint)
+    deleteWaypoint(waypoint).then(
+      () => setWaypointList((prevWaypointList) => deleteFromList<Waypoint>(prevWaypointList, waypoint)),
+      console.error,
+    )
   }
 
   const handleMapClick = useCallback((event: L.LeafletMouseEvent): void => {
-    // console.log('map click, coords:', event.latlng)
     setWaypointToCreate((prevWaypointToCreate) => ({
       ...prevWaypointToCreate,
       coords: event.latlng,
