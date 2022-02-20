@@ -35,9 +35,11 @@ export default function Map(
   useEffect(() => {
     const map = createMap(false)
     const infoBox = new InfoBox(config.map.infoBox.options as L.ControlOptions)
+
     infoBox.addTo(map)
     circleMarkerRef.current.addTo(map)
     mapRef.current = map
+
     return () => { map.remove() }
   }, [])
 
@@ -57,21 +59,31 @@ export default function Map(
       markerGroupRef.current.remove()
     }
 
-    if (mapRef.current === undefined || waypointList.length === 0) {
-      return
-    }
-
     markerGroupRef.current = L.featureGroup(waypointList.map(
       (waypoint) => createWaypointMarker(waypoint, onMarkerClick),
     ))
 
-    const padding = config.map.fitBoundsPadding as [number, number]
-    const bounds = markerGroupRef.current.getBounds()
-
-    bounds.extend(circleMarkerRef.current.getLatLng())
-    mapRef.current.fitBounds(bounds, { padding })
-    markerGroupRef.current.addTo(mapRef.current)
+    if (mapRef.current !== undefined) {
+      markerGroupRef.current.addTo(mapRef.current)
+    }
   }, [ waypointList, onMarkerClick ])
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent): void => {
+      const { code, ctrlKey, shiftKey } = event
+
+      if (!(ctrlKey && shiftKey && code === 'KeyF')) { return }
+      if (mapRef.current === undefined || markerGroupRef.current === undefined) { return }
+
+      const padding = config.map.fitBoundsPadding as [number, number]
+      const bounds = markerGroupRef.current.getBounds()
+
+      bounds.extend(circleMarkerRef.current.getLatLng())
+      mapRef.current.fitBounds(bounds, { padding })
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+  }, [])
 
   return (
     <div id="map" />

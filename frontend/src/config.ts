@@ -40,6 +40,7 @@ export default {
       options: {
         position: 'topright',
       },
+      message: 'Click on the map to choose next waypoint coords.<br/>Press Ctrl+Shift+F to show all markers.',
     },
   },
 }
