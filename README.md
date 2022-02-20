@@ -45,14 +45,14 @@ TBD
   * Non-2xx API responses.
   * JSON parsing errors.
 * Offline mode, allowing to manage waypoint collection locally until network/API becomes available.
-* Component tests, functional tests against mocked API.
+* Vertical layout split for smaller screens in portrait mode.
+* Storybook stories, component tests, functional tests against mocked API.
 
 ## TODO
 ### Backend
 * Unit tests.
 ### Frontend
 * Unit tests.
-* Storybook stories.
 
 ## Dependencies
 ### Backend
@@ -86,7 +86,6 @@ TBD
 * bundler: [Create React App](https://create-react-app.dev/)
 * linters: [`eslint`](https://eslint.org/) + [`stylelint`](https://stylelint.io/)
 * unit tests: [`jest`](https://jestjs.io/)
-* components in isolation: [`storybook`](https://storybook.js.org/docs/react/get-started/whats-a-story)
 
 ## Commands
 ### Backend
@@ -124,7 +123,6 @@ $ docker-compose run api poetry run pytest ./src/
 $ npm ci             # install deps
 $ npm run lint       # lint TS and Sass
 $ npm test           # run unit tests
-$ npm run storybook  # compile and serve Storybook stories
 $ npm start          # run a local CRA dev server
 $ npm run build      # produce a build artifact
 $ npm run serve      # run a local Python web server in "./build/"
