@@ -85,8 +85,8 @@ DELETE  /waypoints/{id}  Delete Waypoint
 * Color-code markers depending on waypoint state: editing, failed to create/update/delete.
 * Interactivity between sidebar items and map markers, as they represent same waypoints:
   * Highlight on hover:
-    * Enlarge the marker.
-    * Change sidebar item background color.
+    * Marker hover: change sidebar item background color.
+    * Sidebar item hover: enlarge the marker.
   * Select on click:
     * Marker click: scroll the sidebar list to the corresponding item.
     * Sidebar item click: reposition the map on the marker, if it was outside of the viewport.
@@ -112,12 +112,12 @@ DELETE  /waypoints/{id}  Delete Waypoint
 
 #### App runtime
 * ASGI server: [`uvicorn`](https://www.uvicorn.org/)
-* app framework: [`fastapi`](https://github.com/tiangolo/fastapi)
-* SQL toolkit: [`sqlalchemy`](https://www.sqlalchemy.org/) + [`geoalchemy2`](https://geoalchemy-2.readthedocs.io/) + [`shapely`](https://shapely.readthedocs.io/en/stable/) (takes long to install inside a container, but needed for conversions)
+* app framework: [`fastapi`](https://github.com/tiangolo/fastapi/)
+* SQL toolkit: [`sqlalchemy`](https://www.sqlalchemy.org/) + [`geoalchemy2`](https://geoalchemy-2.readthedocs.io/) + [`shapely`](https://shapely.readthedocs.io/) (takes long to install inside a container, but needed for geometry conversions)
 
 #### Dev env
-* linter: [`pycodestyle`](https://pycodestyle.readthedocs.io/en/latest/)
-* unit tests: [`pytest`](https://pytest.org/en/latest/)
+* linter: [`pycodestyle`](https://pycodestyle.readthedocs.io/)
+* unit tests: [`pytest`](https://pytest.org/)
 
 ### Frontend
 #### App runtime
@@ -134,7 +134,8 @@ DELETE  /waypoints/{id}  Delete Waypoint
 ### Backend
 ```bash
 # assumes Docker version "20.10.12"
-$ cd ./backend/  # contains ".env" file for docker-compose
+$ cd ./backend/   # contains ".env" file for docker-compose
+$ poetry install  # for local development, since "./api/src:/home/src" are mount via docker-compose
 $ docker-compose up
 # $ docker-compose up --build
 # visit http://localhost:8000/docs for Swagger UI
@@ -163,6 +164,7 @@ $ docker-compose run api poetry run pytest ./src/
 ### Frontend
 ```bash
 # assumes Node version "17.5.0" and NPM version "8.4.1"
+$ cd ./frontend/
 $ npm ci         # install deps
 $ npm run lint   # lint TS and Sass
 $ npm test       # run unit tests
