@@ -113,7 +113,7 @@ DELETE  /waypoints/{id}  Delete Waypoint
 #### App runtime
 * ASGI server: [`uvicorn`](https://www.uvicorn.org/)
 * app framework: [`fastapi`](https://github.com/tiangolo/fastapi)
-* SQL toolkit: [`sqlalchemy`](https://www.sqlalchemy.org/) + [`geoalchemy2`](https://geoalchemy-2.readthedocs.io/)
+* SQL toolkit: [`sqlalchemy`](https://www.sqlalchemy.org/) + [`geoalchemy2`](https://geoalchemy-2.readthedocs.io/) + [`shapely`](https://shapely.readthedocs.io/en/stable/) (takes long to install inside a container, but needed for conversions)
 
 #### Dev env
 * linter: [`pycodestyle`](https://pycodestyle.readthedocs.io/en/latest/)
@@ -163,12 +163,12 @@ $ docker-compose run api poetry run pytest ./src/
 ### Frontend
 ```bash
 # assumes Node version "17.5.0" and NPM version "8.4.1"
-$ npm ci             # install deps
-$ npm run lint       # lint TS and Sass
-$ npm test           # run unit tests
-$ npm start          # run a local CRA dev server
-$ npm run build      # produce a build artifact
-$ npm run serve      # run a local Python web server in "./build/"
+$ npm ci         # install deps
+$ npm run lint   # lint TS and Sass
+$ npm test       # run unit tests
+$ npm start      # run a local CRA dev server
+$ npm run build  # produce a build artifact
+$ npm run serve  # run a local Python web server in "./build/"
 ```
 
 ## Basic manual tests
